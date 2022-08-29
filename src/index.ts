@@ -12,7 +12,7 @@ const state: State = {
   [CamelId.Green]: 1,
   [CamelId.Orange]: 2,
   [CamelId.White]: CamelId.Blue,
-  [CamelId.Yellow]: CamelId.White,
+  [CamelId.Yellow]: CamelId.Green,
 };
 
 const board = getBoard(state);
