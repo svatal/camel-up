@@ -9,14 +9,13 @@ import {
 export function updateProbability(
   state: State,
   notMoved: CamelId[],
-  first: CamelCounter,
-  second: CamelCounter
+  counter: CamelCounter
 ) {
   if (notMoved.length === 0) {
-    const board = getBoard(state);
-    const stack = board.reduce((left, right) => [...left, ...right]);
-    first[stack[stack.length - 1]]++;
-    second[stack[stack.length - 2]]++;
+    getBoard(state)
+      .reduce((left, right) => [...left, ...right])
+      .reverse()
+      .forEach((cId, pos) => counter[cId][pos]++);
     return;
   }
   for (const cId of notMoved) {
@@ -29,7 +28,7 @@ export function updateProbability(
         ...state,
         [cId]: occupants[occupants.length - 1] ?? targetPos,
       };
-      updateProbability(newState, newNotMoved, first, second);
+      updateProbability(newState, newNotMoved, counter);
     }
   }
 }

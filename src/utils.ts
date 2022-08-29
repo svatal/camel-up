@@ -30,10 +30,13 @@ export function getBoard(state: State) {
   return s;
 }
 
-export type CamelCounter = Record<CamelId, number>;
+export type CamelCounter = Record<
+  CamelId,
+  [number, number, number, number, number]
+>;
 
 export function getEmptyCamelCounter(): CamelCounter {
-  return forEachCamel(() => 0);
+  return forEachCamel(() => [0, 0, 0, 0, 0]);
 }
 
 export function forEachCamel<T>(

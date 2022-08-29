@@ -19,31 +19,45 @@ const board = getBoard(state);
 
 console.log("starting board", board);
 
-const first = getEmptyCamelCounter();
-const second = getEmptyCamelCounter();
+const counter = getEmptyCamelCounter();
 
-updateProbability(state, getAllCamels(), first, second);
+updateProbability(state, getAllCamels(), counter);
 
 const total = getAllCamels()
-  .map((cId) => first[cId])
+  .map((cId) => counter[cId][0])
   .reduce((a, b) => a + b);
 
-const pFirst = transformCamelMap(first, (n) => n / total);
-const pSecond = transformCamelMap(second, (n) => n / total);
+const pCounter = transformCamelMap(counter, (ns) => ns.map((n) => n / total));
 
-console.log("pFirst", pFirst);
-console.log("pSecond", pSecond);
+console.log(
+  "pFirst",
+  transformCamelMap(pCounter, (ns) => ns[0])
+);
+console.log(
+  "pSecond",
+  transformCamelMap(pCounter, (ns) => ns[1])
+);
 
 console.log(
   "expected return 5/1/-1",
   forEachCamel(
-    (cId) => pFirst[cId] * 5 + pSecond[cId] - (1 - pFirst[cId] - pSecond[cId])
+    (cId) =>
+      pCounter[cId][0] * 5 +
+      pCounter[cId][1] -
+      pCounter[cId][2] -
+      pCounter[cId][3] -
+      pCounter[cId][4]
   )
 );
 
 console.log(
   "expected return 3/1/-1",
   forEachCamel(
-    (cId) => pFirst[cId] * 3 + pSecond[cId] - (1 - pFirst[cId] - pSecond[cId])
+    (cId) =>
+      pCounter[cId][0] * 3 +
+      pCounter[cId][1] -
+      pCounter[cId][2] -
+      pCounter[cId][3] -
+      pCounter[cId][4]
   )
 );
