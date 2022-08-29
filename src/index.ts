@@ -1,4 +1,4 @@
-import { CamelId, getAllCamels, State } from "./data";
+import { CamelId, getAllCamels, CamelPositions } from "./data";
 import { updateProbability } from "./solver";
 import {
   forEachCamel,
@@ -7,7 +7,7 @@ import {
   transformCamelMap,
 } from "./utils";
 
-const state: State = {
+const state: CamelPositions = {
   [CamelId.Blue]: 0,
   [CamelId.Green]: 1,
   [CamelId.Orange]: 2,

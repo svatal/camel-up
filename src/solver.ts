@@ -1,4 +1,4 @@
-import { State, CamelId } from "./data";
+import { CamelPositions, CamelId, getAllCamels } from "./data";
 import {
   CamelCounter,
   getBoard,
@@ -7,12 +7,12 @@ import {
 } from "./utils";
 
 export function updateProbability(
-  state: State,
+  camelPositions: CamelPositions,
   notMoved: CamelId[],
   counter: CamelCounter
 ) {
   if (notMoved.length === 0) {
-    getBoard(state)
+    getBoard(camelPositions)
       .reduce((left, right) => [...left, ...right])
       .reverse()
       .forEach((cId, pos) => counter[cId][pos]++);
@@ -20,15 +20,15 @@ export function updateProbability(
   }
   for (const cId of notMoved) {
     const newNotMoved = notMoved.filter((id) => id !== cId);
-    const { pos: currentPosition } = getCamelPosition(state, cId);
+    const { pos: currentPosition } = getCamelPosition(camelPositions, cId);
     for (const moveLength of [1, 2, 3]) {
       const targetPos = currentPosition + moveLength;
-      const occupants = getTowerOnPosition(state, targetPos);
-      const newState = {
-        ...state,
+      const occupants = getTowerOnPosition(camelPositions, targetPos);
+      const newCamelPositions = {
+        ...camelPositions,
         [cId]: occupants[occupants.length - 1] ?? targetPos,
       };
-      updateProbability(newState, newNotMoved, counter);
+      updateProbability(newCamelPositions, newNotMoved, counter);
     }
   }
 }

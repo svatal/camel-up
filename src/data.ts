@@ -16,4 +16,4 @@ export function getAllCamels() {
   return Object.values(CamelId);
 }
 
-export type State = Record<CamelId, CamelPos>;
+export type CamelPositions = Record<CamelId, CamelPos>;

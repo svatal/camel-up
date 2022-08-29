@@ -1,7 +1,6 @@
-import { Tracing } from "trace_events";
-import { State, CamelId, getAllCamels, isCamelId } from "./data";
+import { CamelPositions, CamelId, getAllCamels, isCamelId } from "./data";
 
-export function getCamelPosition(state: State, camelId: CamelId) {
+export function getCamelPosition(state: CamelPositions, camelId: CamelId) {
   let pos = state[camelId];
   let level = 0;
   while (isCamelId(pos)) {
@@ -12,7 +11,7 @@ export function getCamelPosition(state: State, camelId: CamelId) {
 }
 
 export function getTowerOnPosition(
-  state: State,
+  state: CamelPositions,
   position: number | CamelId
 ): CamelId[] {
   const camel = getAllCamels().find((cId) => state[cId] === position);
@@ -20,7 +19,7 @@ export function getTowerOnPosition(
   return [camel, ...getTowerOnPosition(state, camel)];
 }
 
-export function getBoard(state: State) {
+export function getBoard(state: CamelPositions) {
   const s: CamelId[][] = []; // Array.from({ length: 18 }, () => []);
   for (const camelId of getAllCamels()) {
     const { pos, level } = getCamelPosition(state, camelId);
